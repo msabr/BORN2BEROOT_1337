@@ -45,4 +45,78 @@ In this project, you will:
   - `df -h` - Monitor disk usage.  
   - `top` / `htop` - Check system performance.  
   - `crontab` - Automate system updates and logs.  
+# **Born2beroot - 42 Network**  
+
+## **Overview**  
+Born2beroot is a **system administration** project that teaches **virtualization, security, and Linux configuration**. The main objective is to set up a **Debian-based virtual machine** with essential security measures, **LVM partitions, SSH, firewall rules, and user management**.  
+
+## **Project Scope**  
+### **Key Topics Covered:**  
+- Installing and configuring a **Debian virtual machine** using **VirtualBox** (or **UTM for macOS**).  
+- Implementing **user management and permissions**.  
+- Setting up a **UFW firewall** and configuring **SSH securely**.  
+- Partitioning disks using **LVM (Logical Volume Manager)**.  
+- Enforcing **password policies** and security hardening.  
+- Monitoring system performance and activity.  
+
+---
+
+## **System Monitoring Script**  
+As part of the project, a **system monitoring script** is required to display important system metrics. Below is the script that **automatically runs every 10 minutes**, sending a message to all logged-in users via `wall`.  
+
+### **Script:**
+```bash
+#!/bin/bash
+
+# System Architecture
+architectur=$(uname -a)
+
+# CPU Information
+cpuphysical=$(grep "physical id" /proc/cpuinfo | sort -u | wc -l)
+cpuvirtual=$(grep -c "processor" /proc/cpuinfo)
+
+# Memory Usage
+memoryusage=$(free --mega | awk '/Mem/ {printf("%d/%dMB (%.2f%%)\n", $3, $2, ($3 / $2) * 100 )}')
+
+# Disk Usage
+fulldisk=$(df -BG | awk '/^\/dev/ && !/boot/ {sum += $2} END {print sum}')
+usagedisk=$(df -BM | awk '/^\/dev/ && !/boot/ {sum += $3} END {print sum}')
+pordisk=$(df -BM | awk '/^\/dev/ && !/boot/ {used+=$3} {total+=$2} END {printf("%.2f"), (used/total)*100}')
+
+# CPU Load
+cpuload=$(mpstat 1 1 | awk '/Average/ {printf "%.2f\n", 100 - $NF}')
+
+# Last Boot Time
+lastboot=$(uptime -s | cut -c-16)
+
+# LVM Usage
+lvmu=$(lsblk | grep -q "lvm" && echo "yes" || echo "no")
+
+# Established TCP Connections
+ctcp=$(ss -t state established | wc -l)
+
+# Logged-in Users
+ulog=$(who | cut -d " " -f1 | sort -u | wc -l)
+
+# Network Information
+ip=$(hostname -I | awk '{print $1}')
+mac=$(ip link show | awk '/ether/ {print $2}')
+
+# Sudo Commands Executed
+cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+
+# Display System Information
+wall "  
+    #Architecture: $architectur
+    #CPU physical: $cpuphysical
+    #vCPU: $cpuvirtual
+    #Memory Usage: $memoryusage
+    #Disk Usage: $usagedisk/${fulldisk}Gb ($pordisk%)
+    #CPU load: $cpuload
+    #Last boot: $lastboot
+    #LVM use: $lvmu
+    #Connections TCP: $ctcp ESTABLISHED
+    #User log: $ulog
+    #Network: IP $ip ($mac)
+    #Sudo: $cmds commands executed"
 
