@@ -39,28 +39,6 @@ In this project, you will:
 - Use **LVM (Logical Volume Manager)** for flexible storage allocation.  
 - Set up separate partitions for **root, home, and swap**.  
 
-### **5. System Monitoring**  
-- Install and configure **system monitoring tools** such as:  
-  - `lsblk` - View disk partitions.  
-  - `df -h` - Monitor disk usage.  
-  - `top` / `htop` - Check system performance.  
-  - `crontab` - Automate system updates and logs.  
-# **Born2beroot - 42 Network**  
-
-## **Overview**  
-Born2beroot is a **system administration** project that teaches **virtualization, security, and Linux configuration**. The main objective is to set up a **Debian-based virtual machine** with essential security measures, **LVM partitions, SSH, firewall rules, and user management**.  
-
-## **Project Scope**  
-### **Key Topics Covered:**  
-- Installing and configuring a **Debian virtual machine** using **VirtualBox** (or **UTM for macOS**).  
-- Implementing **user management and permissions**.  
-- Setting up a **UFW firewall** and configuring **SSH securely**.  
-- Partitioning disks using **LVM (Logical Volume Manager)**.  
-- Enforcing **password policies** and security hardening.  
-- Monitoring system performance and activity.  
-
----
-
 ## **System Monitoring Script**  
 As part of the project, a **system monitoring script** is required to display important system metrics. Below is the script that **automatically runs every 10 minutes**, sending a message to all logged-in users via `wall`.  
 
