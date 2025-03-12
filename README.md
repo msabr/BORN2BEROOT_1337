@@ -46,19 +46,3 @@ In this project, you will:
   - `top` / `htop` - Check system performance.  
   - `crontab` - Automate system updates and logs.  
 
-## **Commands for System Management**  
-```sh
-# Check user details
-sudo cat /etc/passwd
-
-# Check group details
-sudo cat /etc/group
-
-# Display disk partitions
-lsblk
-
-# Check firewall rules
-sudo ufw status
-
-# Monitor system logs
-sudo journalctl -xe
