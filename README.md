@@ -1,4 +1,7 @@
 # **Born2beroot - 42 Network**  
+<div align="center">
+<img src="Born2beroot.png"/>
+</div>
 
 ## **Overview**  
 Born2beroot is a system administration project that introduces the fundamentals of **virtualization, server security, and Linux configuration**. The goal is to set up a **secure Debian-based virtual machine** while implementing essential security measures and user management.  
